@@ -10,7 +10,7 @@ const connection = mysql.createConnection({
     // Your MySQL username
     user: 'root',
     // Your MySQL password
-    password: 'HackDeez12!',
+    password: 'module12',
     database: 'companyDB'
 });
 
@@ -21,32 +21,34 @@ connection.connect(err => {
 });
 
 function mainMenu() {
-    inquirer.prompt([
+  return  inquirer.prompt([
         {
-            name: "main",
             type: "list",
+            name: "main",           
             messsage: "What do you want to do?",
             choices: [
-                "View all departments",
-                "View all roles",
-                "View all employees",
+                "Display all departments",
+                "Display all roles",
+                "Display all employees",
                 "Add a department",
                 "Add a role",
                 "Add an employee",
-                "Update employee role"
+                "Update employee role",
+                "Delete an employee",
+                "Exit \n"
             ]
         }
     ])
         .then(response => {
             console.log(response)
-            switch (response.todo) {
-                case ('View all departments'):
+            switch (response.main) {
+                case ('Display all departments'):
                     displayDepts();
                     break;
-                case ('View all roles'):
+                case ('Display all roles'):
                     displayRoles();
                     break;
-                case ('View all employees'):
+                case ('Display all employees'):
                     displayEmployees();
                     break;
                 case ('Add a department'):
