@@ -1,7 +1,5 @@
 const mysql = require('mysql2');
 const inquirer = require("inquirer");
-const cTable = require('console.table');
-const { response } = require('express');
 
 
 const connection = mysql.createConnection({
@@ -109,7 +107,7 @@ function addDept() {
                 if (nameInput) {
                     return true;
                 } else {
-                    console.log("Please enter the department name!");
+                    console.log("Invalid Response! Please enter the department name.");
                     return false;
                 }
             }
@@ -162,7 +160,7 @@ function addRole() {
                 if (nameInput) {
                     return true;
                 } else {
-                    console.log("Please enter the role name!");
+                    console.log("Invalid Response! Please enter a role name.");
                     return false;
                 }
             }
@@ -175,7 +173,7 @@ function addRole() {
                 if (nameInput) {
                     return true;
                 } else {
-                    console.log("Please enter the salary paid for the role you are creating!");
+                    console.log("Invalid Response! Please enter the salary paid for this role.");
                     return false;
                 }
             }
@@ -259,7 +257,7 @@ function addEmployee() {
                     if (nameInput) {
                         return true;
                     } else {
-                        console.log("Please enter the employee's first name!");
+                        console.log("Invalid Response! Please enter the employee's first name.");
                         return false;
                     }
                 }
@@ -272,7 +270,7 @@ function addEmployee() {
                     if (nameInput) {
                         return true;
                     } else {
-                        console.log("Please enter the employee's last name!");
+                        console.log("Invalid Response! Please enter the employee's last name.");
                         return false;
                     }
                 }
