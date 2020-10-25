@@ -338,7 +338,7 @@ function updateEmployeeRole() {
                 title: name,
             };
         })
-        connection.query('SELECT * FROM employee', (err, res) => {
+        connection.query('SELECT * FROM employees', (err, res) => {
             if (err) throw err;
             var t = new Table;
             res.forEach(employee => {
@@ -360,10 +360,10 @@ function updateEmployeeRole() {
                 choices: roleArray
             }
             ])
-                .then(ress => {
+                .then(res => {
 
                     connection.query('UPDATE employee SET role_id = ? WHERE id = ?',
-                        [ress.role, ress.employeeId],
+                        [res.role, res.employeeId],
 
                         (err, res) => {
                             if (err) throw err;
@@ -394,11 +394,14 @@ function deleteEmployee() {
             message: 'Enter ID number of employee to delete:'
         },
         ])
-            .then(res => {
-                let id = res.deleteMe.split(":")[0];
-                connection.query("DELETE FROM products WHERE ?", [{ id }], (err, res) => {
+        .then(res => {
+
+            connection.query('DELETE FROM employee WHERE id = ?',
+                [res.employeeId],
+
+                (err, res) => {
                     if (err) throw err;
-                    console.log(res);
+                    console.log("Employee deleted: " + res.affectedRows)
                     mainMenu();
                 })
             })
