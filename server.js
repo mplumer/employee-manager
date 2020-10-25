@@ -1,7 +1,8 @@
 const mysql = require('mysql2');
 const inquirer = require("inquirer");
-const Table = require('easy-table');
 const cTable = require('console.table');
+const Table = require('easy-table');
+
 
 
 const connection = mysql.createConnection({
@@ -11,7 +12,7 @@ const connection = mysql.createConnection({
     user: 'root',
     // Your MySQL password
     password: 'module12',
-    database: 'companyDB'
+    database: 'company_db'
 });
 
 connection.connect(err => {
@@ -21,10 +22,10 @@ connection.connect(err => {
 });
 
 function mainMenu() {
-  return  inquirer.prompt([
+    inquirer.prompt([
         {
             type: "list",
-            name: "main",           
+            name: "choice",           
             messsage: "What do you want to do?",
             choices: [
                 "Display all departments",
@@ -39,9 +40,8 @@ function mainMenu() {
             ]
         }
     ])
-        .then(response => {
-            console.log(response)
-            switch (response.main) {
+        .then(res => {
+            switch (res.choice) {
                 case ('Display all departments'):
                     displayDepts();
                     break;
@@ -117,10 +117,10 @@ function addDept() {
             }
         }
     ])
-        .then(response => {
+        .then(res => {
             connection.query('INSERT INTO department SET ?',
                 {
-                    name: response.name
+                    name: res.name
                 },
                 (err, res) => {
                     if (err) throw err;
@@ -188,11 +188,11 @@ function addRole() {
             choices: deptArray
         }
         ])
-            .then(response => {
+            .then(res => {
                 connection.query('INSERT INTO role SET ?', {
-                    title: response.role,
-                    salary: response.salary,
-                    department_id: response.department
+                    title: res.role,
+                    salary: res.salary,
+                    department_id: res.department
                 },
 
                     (err, res) => {
@@ -292,13 +292,13 @@ function addEmployee() {
                 choices: managerArray
             }
             ])
-                .then(response => {
+                .then(res => {
 
                     connection.query('INSERT INTO employee SET ?', {
-                        first_name: response.firstName,
-                        last_name: response.lastName,
-                        role_id: response.role,
-                        manager_id: response.manager
+                        first_name: res.firstName,
+                        last_name: res.lastName,
+                        role_id: res.role,
+                        manager_id: res.manager
                     },
 
                         (err, res) => {
@@ -340,13 +340,13 @@ function updateEmployeeRole() {
         })
         connection.query('SELECT * FROM employee', (err, res) => {
             if (err) throw err;
-            var table = new Table;
+            var t = new Table;
             res.forEach(employee => {
-                table.cell('Employee ID', employee.id)
-                table.cell('Name', employee.first_name + " " + employee.last_name)
-                table.newRow()
+                t.cell('Employee ID', employee.id)
+                t.cell('Name', employee.first_name + " " + employee.last_name)
+                t.newRow()
             })
-            console.log(table.toString())
+            console.log(t.toString())
 
             inquirer.prompt([{
                 type: 'input',
@@ -360,10 +360,10 @@ function updateEmployeeRole() {
                 choices: roleArray
             }
             ])
-                .then(answers => {
+                .then(ress => {
 
                     connection.query('UPDATE employee SET role_id = ? WHERE id = ?',
-                        [answers.role, answers.employeeId],
+                        [ress.role, ress.employeeId],
 
                         (err, res) => {
                             if (err) throw err;
@@ -386,7 +386,7 @@ function deleteEmployee() {
             t.cell('Name', employee.first_name + " " + employee.last_name)
             t.newRow()
         })
-        console.log(table.toString())
+        console.log(t.toString())
 
         inquirer.prompt([{
             type: 'input',
@@ -394,8 +394,8 @@ function deleteEmployee() {
             message: 'Enter ID number of employee to delete:'
         },
         ])
-            .then(response => {
-                let id = response.deleteMe.split(":")[0];
+            .then(res => {
+                let id = res.deleteMe.split(":")[0];
                 connection.query("DELETE FROM products WHERE ?", [{ id }], (err, res) => {
                     if (err) throw err;
                     console.log(res);
