@@ -1,5 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require("inquirer");
+const Table = require('easy-table');
+const cTable = require('console.table');
 
 
 const connection = mysql.createConnection({
@@ -376,11 +378,11 @@ function updateEmployeeRole() {
 function deleteEmployee() {
     connection.query('SELECT * FROM employee', (err, res) => {
         if (err) throw err;
-        var table = new Table;
+        var t = new Table;
         res.forEach(employee => {
-            table.cell('Employee ID', employee.id)
-            table.cell('Name', employee.first_name + " " + employee.last_name)
-            table.newRow()
+            t.cell('Employee ID', employee.id)
+            t.cell('Name', employee.first_name + " " + employee.last_name)
+            t.newRow()
         })
         console.log(table.toString())
 
