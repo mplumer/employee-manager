@@ -18,7 +18,7 @@ Clone or fork the code from the Employee Manager repository on GitHub. Open the 
 ### Usage
 Use the integrated terminal in your preferred code-editing application to enter in the command "node server.js". Follow the prompts to create, edit and view a new company database.
 ### Demonstration Video
-
+https://drive.google.com/file/d/1kcNnsrriVuKlGLCjpwTCLZYo7qxyn2x0/view?usp=sharing
 
 ### Contributing
 Notable is an open source project, and anyone is encourged to contribute by cloning or forking the code and working to improve its function and versatility.
